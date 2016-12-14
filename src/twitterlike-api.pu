@@ -1,0 +1,32 @@
+@startuml
+
+title TwitterLike API
+
+class User {
+    +db
+    +save()
+    +find(id)
+    +auth(name, password)
+    +unfollowers(user_id)
+}
+
+class Follow {
+    +db
+    +save(follow_id, user_id)
+    +find(id)
+}
+
+class Tweet {
+    +db
+    +save(user_id, text)
+    +fing(id)
+    +find_by_user_id(user_id)
+    +timeline(user_id)
+}
+
+Tweet <.. User
+Tweet <.. Follow
+
+Follow <..> User
+
+@enduml

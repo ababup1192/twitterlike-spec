@@ -1,0 +1,31 @@
+@startuml
+
+hide footbox
+title TwitterLike ログイン
+
+actor User as user
+participant TwitterLikeWeb as web
+participant TwitterLikeAPI as api
+database Sqlite as sqlite
+
+user -> web : ログイン
+
+activate web
+
+web -> web : Session確認(Session無しとする)
+web -> api : UserID & Password
+
+group ログイン認証処理
+api -> sqlite : User's Saltの取得
+api <- sqlite : User's Salt
+api -> api : Saltによるハッシュ生成
+api -> sqlite : ログイン認証
+api <- sqlite : ログイン認証の可否(可とする)
+end
+
+web <- api : ログイン認証の可否(可とする)
+web -> web : SessionにUserIDを保存
+
+user <- web : TwitterLikeページ(HTML)
+
+@enduml
